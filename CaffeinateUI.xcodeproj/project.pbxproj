@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		A090FEDA2FCDD5D4005EC326 /* CaffeinateUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaffeinateUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A090FEDA2FCDD5D4005EC326 /* Caffeinate UI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Caffeinate UI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,7 +40,7 @@
 		A090FEDB2FCDD5D4005EC326 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A090FEDA2FCDD5D4005EC326 /* CaffeinateUI.app */,
+				A090FEDA2FCDD5D4005EC326 /* Caffeinate UI.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -67,7 +67,7 @@
 			packageProductDependencies = (
 			);
 			productName = CaffeinateUI;
-			productReference = A090FEDA2FCDD5D4005EC326 /* CaffeinateUI.app */;
+			productReference = A090FEDA2FCDD5D4005EC326 /* Caffeinate UI.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -266,7 +266,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.unionsep.CaffeinateUI;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Caffeinate UI";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -301,7 +301,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.unionsep.CaffeinateUI;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Caffeinate UI";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
