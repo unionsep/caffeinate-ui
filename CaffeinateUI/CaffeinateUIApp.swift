@@ -12,25 +12,85 @@ import Combine
 
 @main
 struct CaffeinateUIApp: App {
-    @StateObject private var caffeinate = CaffeinateController()
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     var body: some Scene {
-        MenuBarExtra("CaffeinateUI", systemImage: caffeinate.isRunning ? "cup.and.saucer.fill" : "cup.and.saucer") {
-            Button("Start") {
-                caffeinate.start()
-            }
-            .disabled(caffeinate.isRunning)
-            
-            Button("Stop") {
-                caffeinate.stop()
-            }
-            .disabled(!caffeinate.isRunning)
-            
-            Divider()
+        Settings {
+            EmptyView()
+        }
+    }
+}
 
-            Button("Quit") {
-                caffeinate.stop()
-                NSApplication.shared.terminate(nil)
-            }
+final class AppDelegate: NSObject, NSApplicationDelegate {
+    private let caffeinate = CaffeinateController()
+    private var statusItem: NSStatusItem?
+    
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        
+        if let button = statusItem?.button {
+            button.target = self
+            button.action = #selector(statusItemClicked(_:))
+            button.sendAction(on: [.leftMouseUp, .rightMouseUp])
+        }
+        
+        updateIcon()
+    }
+    
+    @objc private func statusItemClicked(_ sender: NSStatusBarButton) {
+        if NSApp.currentEvent?.type == .rightMouseUp {
+            showMenu()
+        } else {
+            caffeinate.toggle()
+            updateIcon()
+        }
+    }
+    
+    private func showMenu() {
+        let menu = NSMenu()
+        menu.autoenablesItems = false
+        
+        let startItem = NSMenuItem(title: "Start", action: #selector(startCaffeinate), keyEquivalent: "")
+        startItem.target = self
+        startItem.isEnabled = !caffeinate.isRunning
+        menu.addItem(startItem)
+        
+        let stopItem = NSMenuItem(title: "Stop", action: #selector(stopCaffeinate), keyEquivalent: "")
+        stopItem.target = self
+        stopItem.isEnabled = caffeinate.isRunning
+        menu.addItem(stopItem)
+        
+        menu.addItem(.separator())
+        
+        let quitItem = NSMenuItem(title: "Quit", action: #selector(quit), keyEquivalent: "q")
+        quitItem.target = self
+        menu.addItem(quitItem)
+        
+        statusItem?.menu = menu
+        statusItem?.button?.performClick(nil)
+        statusItem?.menu = nil
+    }
+    
+    @objc private func startCaffeinate() {
+        caffeinate.start()
+        updateIcon()
+    }
+    
+    @objc private func stopCaffeinate() {
+        caffeinate.stop()
+        updateIcon()
+    }
+    
+    @objc private func quit() {
+        caffeinate.stop()
+        NSApplication.shared.terminate(nil)
+    }
+    
+    private func updateIcon() {
+        let symbolName = caffeinate.isRunning ? "cup.and.saucer.fill" : "cup.and.saucer"
+        
+        if let image = NSImage(systemSymbolName: symbolName, accessibilityDescription: "Caffeinate UI") {
+            image.isTemplate = true
+            statusItem?.button?.image = image
         }
     }
 }
